@@ -29,5 +29,20 @@ namespace EmployeeManagementWebApp.Controllers
                 return this.BadRequest();
             }
         }
+
+        [HttpPost]
+        [Route("api/Login")]
+        public IActionResult GetLoginDetails([FromBody] Employee employee)
+        {
+            var result = this.repository.LoginToEmployee(employee.Email, employee.Password);
+            if (result.Equals("LOGIN SUCCESS"))
+            {
+                return this.Ok(result);
+            }
+            else
+            {
+                return this.BadRequest();
+            }
+        }
     }
 }
