@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <title>Registration</title>
+    <style>
+        .scroll {
+            overflow-y: scroll;
+            min-width: 200px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <h3 class="h3">Employee Management System</h3>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-4 form-div scroll">
+                <form name="formReg">
+                    <h1 class="text-center">REGISTER</h1>
+                    <div class="form-group">
+                        <label for="firstname"><B />First Name</label>
+                        <input type="text" name="firstname" id="firstname"
+                               class="form-control form-control-lg" placeholder="Enter first name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname"><B />Last Name</label>
+                        <input type="text" name="lastname" id="lastname"
+                               class="form-control form-control-lg" placeholder="Enter Last name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="mobileNo">Mobile No:</label>
+                        <input type="number" name="MobileNo" id="mobileNo"
+                               class="form-control form-control-lg" placeholder="Enter Mobile No" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email"
+                               class="form-control form-control-lg" placeholder="Enter Email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" id="address"
+                               class="form-control form-control-lg" placeholder="Enter Address" />
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="number" name="pincode" id="pin"
+                               class="form-control form-control-lg" placeholder="Enter Pincode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" name="companyname" id="compname"
+                               class="form-control form-control-lg" placeholder="Enter Company Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="jobprofile">Job Profile</label>
+                        <input type="text" name="jobprofile" id="job"
+                               class="form-control form-control-lg" placeholder="Enter Job Profile" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password"
+                               class="form-control form-control-lg" placeholder="Enter Password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Confirm Password</label>
+                        <input type="password" name="confirmpass" id="confirmpass"
+                               class="form-control form-control-lg" placeholder="Enter Confirm Password" />
+                    </div>
+                    <br />
+                    <input type="button" name="Register" id="btnClick" class="btn-primary" btnClick" value="REGISTER" />
+                    <div class="pass">
+                        <a href="login.html">Login Instead</a>
+                    </div>
+                    <br />
+                    <br /><br />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnClick").click(function () {
+
+                var firstNameExp = /^[A-Za-z]{3,20}$/;
+                var lastNameExp = /^[A-Za-z]{3,20}$/;
+                var mobNumExp = /^[1-9]{10}$/;
+                var emailExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                var addressExp = /^[#.0-9a-zA-Z\s,-]+$/;
+                var pinExp = /^[1-9]{1}[0-9]{5}/;
+                var compNameExp = /[a-zA-z\s]{5,20}/;
+                var jobPrExp = /[A-Za-z\s]{5,20}/;
+                var passwordExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                if (!firstNameExp.test(document.formReg.firstname.value)) {
+                    alert("Invalid First Name ");
+                    document.formReg.firstname.focus();
+                    return false;
+                } else if (!lastNameExp.test(document.formReg.lastname.value)) {
+                    alert("Invalid Last Name ");
+                    document.formReg.lastname.focus();
+                    return false;
+                } else if (!mobNumExp.test(document.formReg.MobileNo.value)) {
+                    alert("Invalid Mobile Number ");
+                    document.formReg.MobileNo.focus();
+                    return false;
+                } else if (!emailExp.test(document.formReg.email.value)) {
+                    alert("Invalid email-Id ");
+                    document.formReg.email.focus();
+                    return false;
+                } else if (!addressExp.test(document.formReg.address.value)) {
+                    alert("Invalid Address ");
+                    document.formReg.address.focus();
+                    return false;
+                } else if (!pinExp.test(document.formReg.pincode.value)) {
+                    alert("Invalid pincode ");
+                    document.formReg.pincode.focus();
+                    return false;
+                } else if (!compNameExp.test(document.formReg.companyname.value)) {
+                    alert("Invalid Company Name ");
+                    document.formReg.companyname.focus();
+                    return false;
+                } else if (!jobPrExp.test(document.formReg.jobprofile.value)) {
+                    alert("Invalid Profile ");
+                    document.formReg.jobprofile.focus();
+                    return false;
+                } else if (!passwordExp.test(document.formReg.password.value)) {
+                    alert("Invalid password ");
+                    document.formReg.password.focus();
+                    return false;
+                } else if (!passwordExp.test(document.formReg.confirmpass.value)) {
+                    alert("Invalid password ");
+                    document.formReg.confirmpass.focus();
+                    return false;
+                }
+
+
+                var employee = {};
+                employee.FirstName = $("#firstname").val();
+                employee.LastName = $("#lastname").val();
+                employee.MobileNo = $("#mobileNo").val();
+                employee.Email = $("#email").val();
+                employee.Address = $("#address").val();
+                employee.Pincode = $("#pin").val();
+                employee.CompanyName = $("#compname").val();
+                employee.JobProfile = $("#job").val();
+                employee.Password = $("#confirmpass").val();
+                console.log(JSON.stringify(employee));
+                $.ajax({
+                    type: "POST",
+                    url: "/api/addedEmployee",
+                    data: JSON.stringify(employee),
+                    dataType: "Json",
+                    contentType: "application/json; charset=utf-8",
+                    processData: true,
+                    success: function () {
+                        alert("Data has been added successfully");
+                        return true;
+                    },
+                    error: function () {
+                        alert("Error while inseing data");
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
