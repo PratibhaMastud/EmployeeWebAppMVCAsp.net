@@ -25,12 +25,6 @@ namespace EmployeeRepository
             return message;
         }
 
-        public IEnumerable<Employee> GetEmployee(string EmployeeId)
-        {
-            List<Employee> employees = new List<Employee>();
-            employees = employeeContext.Employees.ToList();
-            return employees;
-        }
 
         public string LoginToEmployee(string Email, string Password)
         {
@@ -49,17 +43,12 @@ namespace EmployeeRepository
             return message;
         }
 
-        public string DeleteEmployee(string id)
+        public IEnumerable<Employee> GetEmployee(string EmployeeId)
         {
-            Employee employee = employeeContext.Employees.Find(id);
-            if (employee == null)
-            {
-                return "Not Found.";
-            }
-
-            employeeContext.Employees.Remove(employee);
-            employeeContext.SaveChanges();
-            return "SUCCESS";
+            List<Employee> employees = new List<Employee>();
+            employees = employeeContext.Employees.ToList();
+            return employees;
         }
+
     }
 }
