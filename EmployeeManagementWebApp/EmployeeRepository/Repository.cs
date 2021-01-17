@@ -49,6 +49,16 @@ namespace EmployeeRepository
             employees = employeeContext.Employees.ToList();
             return employees;
         }
-
+        public string DeleteEmployee(int id)
+        {
+            Employee employee = employeeContext.Employees.Find(id);
+            if (employee == null)
+            {
+                return "Not Found.";
+            }
+            employeeContext.Employees.Remove(employee);
+            employeeContext.SaveChanges();
+            return "SUCCESS";
+        }
     }
 }

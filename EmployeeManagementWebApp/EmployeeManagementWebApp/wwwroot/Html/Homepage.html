@@ -51,53 +51,42 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function () {
             $.ajax({
-                url: "/api/getEmployee",
                 type: "GET",
+                url: "/api/getEmployee",
                 dataType: "Json",
                 success: function (data) {
-                    var employeeRecord = $("#employeetbl tbody");
+                    var EmployeeRecord = $("#employeetbl tbody");
                     $(data).each(function (index, employee) {
-                        employeeRecord.append('<tr><td>' + employee.employeeId + '</td><td>' + employee.firstName + '</td><td>' + employee.lastName + '</td><td>' + employee.mobileNo + '</td><td>' + employee.email + '</td><td>' + employee.address
-                            + '</td><td>' + employee.pincode + '</td><td>' + employee.companyName + '</td><td>' + employee.jobProfile + '<td>+ <a href= Edit.html><label id=edit>Edit</label></a></td>' + '<td ><a href= Delete.html><label id=delete>Delete</label></a></td>');
+                        EmployeeRecord.append('<tr><td>' + employee.employeeId + '</td><td>' + employee.firstName + '</td><td>' + employee.lastName + '</td><td>' + employee.mobileNo + '</td><td>' + employee.email + '</td><td>' + employee.address
+                            + '</td><td>' + employee.pincode + '</td><td>' + employee.companyName + '</td><td>' + employee.jobProfile + '<td>+ <a href= Edit.html><label id=edit>Edit</label></a></td>' + ' <td ><input type="button" id="deleteId" onclick="deleteRowData(' + employee.employeeId + ')" class="delete" value="Delete" ></td>');
                         console.log(employee);
                     });
                 }
             });
         });
-    </script>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $("#employeetbl tbody tr").remove();
-                $.ajax({
-                    type: 'GET',
-                    url: "/api/delete",
-                    dataType: 'json',
-                    data: { id: '' },
-                    success: function (data) {
-                        var items = '';
-                        $.each(data, function (i, item) {
-                            var rows = "<tr>"
-                                + "<td >" + item.Id + "</td>"
-                                + "<td >" + item.FirstName + "</td>"
-                                + "<td >" + item.LastName + "</td>"
-                                + "<td >" + item.City + "</td>"
-                                + "<td >" + item.State + "</td>"
-                                + "<td >" + item.Zip + "</td>"
-                                  //+ "<td ><a href=" + master.html + "><label id=editlabel>Edit</label></a></td>"
-                            //+ "<td ><a href=" + master.html + "><label id=deletlabel>Delete</label></a></td>"
-                            + "</tr>";
-                        $('#tblStudent tbody').append(rows);
-                    });
+            ///Deleting Row Method
+        function deleteRowData(employeeId) {
+            confirm("Are You Sure");
+            console.log({ "id": employeeId });
+            $.ajax({
+                type: "DELETE",
+                url: "/api/delete/" + employeeId,
+                success: function (data) {
+                    alert("Data Deleted Succesfully");
+                    window.location.reload();
+                    return true;
                 },
-               
+                error: function () {
+                    alert("Something Went Wrong");
+                }
             });
-            return false;
-        });
+        }
+            
+
     </script>
 
 </body>
-    </html>
+</html>

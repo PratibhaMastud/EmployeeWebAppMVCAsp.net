@@ -59,5 +59,20 @@ namespace EmployeeManagementWebApp.Controllers
                 return this.BadRequest(e.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("api/delete/{id}/")]
+        public IActionResult DeleteParticularEmployee([FromRoute]int id)
+        {
+            var result = this.repository.DeleteEmployee(id);
+            if (result.Equals("SUCCESS"))
+            {
+                return this.Ok(result);
+            }
+            else
+            {
+                return this.BadRequest();
+            }
+        }
     }
 }
