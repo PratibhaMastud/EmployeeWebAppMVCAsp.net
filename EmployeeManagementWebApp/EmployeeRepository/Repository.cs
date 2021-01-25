@@ -1,13 +1,20 @@
-﻿using EmployeeModel;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Repository.cs" company="Bridgelabz">
+//   Copyright © 2019 Company="BridgeLabz"
+// </copyright>
+// <creator name="Pratibha Mastud"/>
+// --------------------------------------------------------------------------------------------------------------------
+
 
 namespace EmployeeRepository
 {
+    using EmployeeModel;
+    using Microsoft.EntityFrameworkCore.Storage;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Text;
     public class Repository : IRepository
     {
         UserDbContext employeeContext;
@@ -59,6 +66,27 @@ namespace EmployeeRepository
             employeeContext.Employees.Remove(employee);
             employeeContext.SaveChanges();
             return "SUCCESS";
+        }
+
+        public IEnumerable<Employee> GetEmployee(int EmployeeId)
+        {
+            List<Employee> employees = new List<Employee>();
+            employees.Add(this.employeeContext.Employees.Find(EmployeeId));
+            return employees;
+        }
+
+        public string UpdateEmployeeDetails(Employee updateEmployee)
+        {
+            try
+            {
+                this.employeeContext.Employees.Update(updateEmployee);
+                this.employeeContext.SaveChangesAsync();
+                return "SUCCESS";
+            }
+            catch (NullReferenceException e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -47,11 +47,11 @@ namespace EmployeeManagementWebApp.Controllers
 
         [HttpGet]
         [Route("api/getEmployee")]
-        public IActionResult GetEmpployeeById(string id)
+        public IActionResult GetEmpployeeById(string EmployeeId)
         {
             try
             {
-                IEnumerable<Employee> employeeList = this.repository.GetEmployee(id);
+                IEnumerable<Employee> employeeList = this.repository.GetEmployee(EmployeeId);
                 return this.Ok(employeeList);
             }
             catch (Exception e)
@@ -61,10 +61,10 @@ namespace EmployeeManagementWebApp.Controllers
         }
 
         [HttpDelete]
-        [Route("api/delete/{id}/")]
-        public IActionResult DeleteParticularEmployee([FromRoute]int id)
+        [Route("api/delete/{EmployeeId}/")]
+        public IActionResult DeleteParticularEmployee([FromRoute]int EmployeeId)
         {
-            var result = this.repository.DeleteEmployee(id);
+            var result = this.repository.DeleteEmployee(EmployeeId);
             if (result.Equals("SUCCESS"))
             {
                 return this.Ok(result);
@@ -74,5 +74,39 @@ namespace EmployeeManagementWebApp.Controllers
                 return this.BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("api/GetEmployeeDetail")]
+        public IActionResult GetEmployee(int EmployeeId)
+        {
+            try
+            {
+                IEnumerable<Employee> list = this.repository.GetEmployee(EmployeeId);
+                return this.Ok(list);
+
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/update/{EmployeeId}")]
+        public IActionResult UpdateEmployee([FromBody]Employee employee, int EmployeeId)
+        {
+            employee.EmployeeId = EmployeeId;
+            var result = this.repository.UpdateEmployeeDetails(employee);
+            if (result.Equals("SUCCESS"))
+            {
+                return this.Ok(result);
+            }
+            else
+            {
+                return this.BadRequest();
+            }
+        }
+
+
     }
 }
