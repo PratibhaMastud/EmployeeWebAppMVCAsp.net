@@ -19,7 +19,7 @@
 
         </div>
     </div>
-    <table id="home">
+    <table id="employee">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -164,8 +164,8 @@
                 $("#edit" + employeeId).click(function () {
                     $.ajax({
                         type: "Get",
-                        url: "/api/GetEmployeeDetail",
-                        data: { 'id': employeeId },
+                        url: "/api/GetEmployeeDetail/" + employeeId,
+                      //  data: { 'id': employeeId },
                         dataType: "Json",
                         processData: true,
                         success: function (data) {
@@ -179,7 +179,7 @@
                                 $("#Pincode").val(item.pincode);
                                 $("#Company").val(item.companyName);
                                 $("#JobProfile").val(item.jobProfile);
-                                return true;
+                                console.log(item.employeeId + " " + item.firstName);
                             });
                         },
                         error: function () {

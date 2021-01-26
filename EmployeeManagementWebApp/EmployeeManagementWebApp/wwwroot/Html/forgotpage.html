@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="EmpValidation.js" type="text/javascript"></script>
 
     <title>Employee Management</title>
 
@@ -16,22 +16,57 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form-div divc ">
-                <form action="/Homepage.html" onsubmit="return validation()" method="post">
+                <form>
                     <h1 class="text-center">Forgot Password</h1>
                     <div class="form-group">
                         <label for="email"><B />Email-Id : </label>
-                        <input type="text" name="username"
+                        <input type="text" name="username" id="email"
                                class="form-control form-control-lg" placeholder="Enter Email Address" />
                         <br /><br />
-                        <input type="submit" value="Login" />
+                        <input type="submit" id="submitEmail" value="Submit" />
 
                         <br /><br />
-                        <a href="Reset.html" id="gotosignin" class="tab">NEXT</a>
+                        <a href="login.html" id="gotosignin" class="tab">Login</a>
 
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#submitEmail").click(function () {
+
+                var emailExpr = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                var Email = $("#email").val();
+                if (Email.match(emailExpr)) {
+                }
+                else {
+                    alert("Invalid email.");
+                    return false;
+                }
+                console.log("E-mail: " + Email);
+                $.ajax({
+                    type: "GET",
+                    url: "/api/sendEmailAddress/" + Email,
+                    dataType: "",
+                    contentType: "application/json; charset=utf-8",
+                    processData: true,
+                    success: function () {
+                        alert("Password Send Successfully.");
+                        window.location.href = "https://localhost:5001/Html/login.html"
+                        return true;
+                    },
+                    error: function () {
+                        alert("Error send by Email..");
+                    }
+                });
+            });
+        });
+
+    </script>
 </body>
 </html>

@@ -11,8 +11,11 @@ namespace EmployeeRepository
         public string LoginToEmployee(string Email, string Password);
         public IEnumerable<Employee> GetEmployee(string EmployeeId);
         public string DeleteEmployee(int EmployeeId);
-        public IEnumerable<Employee> GetEmployee(int EmployeeId);
+        public IEnumerable<Employee> GetEmployeeByID(int EmployeeId);
         public string UpdateEmployeeDetails(Employee employee);
+        public string SendEmailForForgotPass(string emailAddress);
+        public string ResetEmployeePassword(string oldpassword, string newpassword);
+
 
     }
 }

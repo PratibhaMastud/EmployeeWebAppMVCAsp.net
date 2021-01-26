@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace EmployeeManagementWebApp.Controllers
 {
-    //[ApiController]
+    [ApiController]
     public class EmployeeController : ControllerBase
     {
         private IRepository repository;
@@ -76,12 +76,12 @@ namespace EmployeeManagementWebApp.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetEmployeeDetail")]
-        public IActionResult GetEmployee(int EmployeeId)
+        [Route("api/GetEmployeeDetail/{EmployeeId}")]
+        public IActionResult GetEmployee([FromRoute] int EmployeeId)
         {
             try
             {
-                IEnumerable<Employee> list = this.repository.GetEmployee(EmployeeId);
+                IEnumerable<Employee> list = this.repository.GetEmployeeByID(EmployeeId);
                 return this.Ok(list);
 
             }
@@ -107,6 +107,35 @@ namespace EmployeeManagementWebApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/sendEmailAddress/{emailId}/")]
+        public IActionResult ForgotPassword(string emailId)
+        {
+            var result = this.repository.SendEmailForForgotPass(emailId);
+            if (result.Equals("SUCCESS"))
+            {
+                return this.Ok((new { success = true, Message = "Password Sent Successfully", Data = result }));
+            }
+            else
+            {
+                return this.BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("api/resetPassword/{oldPassword}/{newPassword}/")]
+        public IActionResult ResetPasswords(string oldPassword, string newPassword)
+        {
+            var result = this.repository.ResetEmployeePassword(oldPassword, newPassword);
+            if (result.Equals("SUCCESS"))
+            {
+                return this.Ok(new { success = true, Message = "Password Updated successfully", Data = result });
+            }
+            else
+            {
+                return this.BadRequest();
+            }
+        }
 
     }
 }

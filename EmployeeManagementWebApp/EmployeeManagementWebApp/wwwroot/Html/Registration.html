@@ -98,7 +98,7 @@
                 var pinExp = /^[1-9]{1}[0-9]{5}/;
                 var compNameExp = /[a-zA-z\s]{5,20}/;
                 var jobPrExp = /[A-Za-z\s]{5,20}/;
-                var passwordExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                var passwordExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;;
                 if (!firstNameExp.test(document.formReg.firstname.value)) {
                     alert("Invalid First Name ");
                     document.formReg.firstname.focus();

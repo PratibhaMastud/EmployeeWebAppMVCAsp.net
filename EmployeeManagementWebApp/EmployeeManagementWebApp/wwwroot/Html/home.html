@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Welcome To Employee management</title>
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Home</title>
+    <style>
+        .scroll {
+            overflow-y: scroll;
+            min-width: 200px;
+            height: 400px;
+        }
+    </style>
+</head>
+    <body>
+        <div class="topnav">
+            <h3 class="h3">Employee Management System</h3>
+            <a href="Reset.html">Reset Password</a>
+        </div>
+        <div class="container">
+            <table id="employee">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile No</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Pincode</th>
+                        <th>Company Name</th>
+                        <th>Job Profile</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Employee Details for Updation</h4>
+                        </div>
+                        <div class="modal-body" style="padding-left: 70px;">
+                            <form name="myForm" style="">
+                                <div class="form-group row">
+                                    <label for="employeeId" class="col-md-4 col-form-label text-md-left">Employee Id</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="empId" class="form-control" name="employeeId" placeholder="employee Id">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="first-name" class="col-md-4 col-form-label text-md-left">First Name</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="firstName" class="form-control" name="firstName" placeholder="First name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lastName" class="col-md-4 col-form-label text-md-left">Last Name</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Last name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="PhoneNumber" class="col-md-4 col-form-label text-md-left">Phone Number</label>
+                                    <div class="col-md-6">
+                                        <input type="number" id="phoneNumber" class="form-control" name="phoneNumber" placeholder="Phone number">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Email" class="col-md-4 col-form-label text-md-left">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="Email" class="form-control" name="email" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Address" class="col-md-4 col-form-label text-md-left">Address</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="Address" class="form-control" name="address" placeholder="Address">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Pincode" class="col-md-4 col-form-label text-md-left">Pincode</label>
+                                    <div class="col-md-6">
+                                        <input type="number" id="Pincode" class="form-control" name="pincode" placeholder="Pincode">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Company" class="col-md-4 col-form-label text-md-left">Company Name</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="Company" class="form-control" name="Company" placeholder="Company Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="JobProfile" class="col-md-4 col-form-label text-md-left">Job Profile</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="JobProfile" class="form-control" name="jobProfile" placeholder="Job Profile">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-primary" id="btnUpdateEmployee" value="Update">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/getEmployee",
+                    success: function (data) {
+                        var employeeTable = $("#employee tbody");
+                        $(data).each(function (i, item) {
+                            employeeTable.append(
+                                "<tr><td> " + item.employeeId + "</td >"
+                                + "<td> " + item.firstName + "</td > "
+                                + "<td> " + item.lastName + "</td > "
+                                + "<td> " + item.phoneNumber + "</td> "
+                                + "<td> " + item.email + "</td > "
+                                + "<td> " + item.address + "</td > "
+                                + "<td> " + item.pincode + "</td > "
+                                + "<td> " + item.company + "</td> "
+                                + "<td> " + item.jobProfile + "</td > "
+                                + '<td ><button type=button id=edit' + item.employeeId + ' class="btn btn-primary"  onclick= editTable(' + item.employeeId + ') value=Edit data-toggle="modal" data-target="#myModal">Edit</button> </td>'
+                                + '<td ><a href= Homepage.html></a><input type=button name=Delete id=delete onclick=myfunction(' + item.employeeId + ') value=Delete></td>'
+                                + "</tr> "
+                            )
+
+                        });
+                    }
+                });
+            });
+
+            function myfunction(employeeId) {
+                $(function () {
+                    $("#delete").click(function () {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/api/delete/" + employeeId,
+                            success: function (data) {
+                                alert("Data Deleted Succesfully");
+                                window.location.reload();
+                                return true;
+                            },
+                            error: function () {
+                                alert("Something Went Wrong");
+                            }
+                        });
+                    });
+                });
+            }
+
+            function editTable(employeeId) {
+                $(function () {
+                    $("#edit" + employeeId).click(function () {
+                        $.ajax({
+                            type: "Get",
+                            url: "/api/GetEmployeeDetail",
+                            data: { 'id': employeeId },
+                            dataType: "Json",
+                            processData: true,
+                            success: function (data) {
+                                $(data).each(function (i, item) {
+                                    $("#empId").val(item.employeeId);
+                                    $("#firstName").val(item.firstName);
+                                    $("#lastName").val(item.lastName);
+                                    $("#phoneNumber").val(item.phoneNumber);
+                                    $("#Email").val(item.email);
+                                    $("#Address").val(item.address);
+                                    $("#Pincode").val(item.pincode);
+                                    $("#Company").val(item.company);
+                                    $("#JobProfile").val(item.jobProfile);
+                                    return true;
+                                });
+                            },
+                            error: function () {
+                                alert("Error while fetching employee details");
+                            }
+                        });
+                    });
+                });
+            }
+
+            $(function () {
+                $("#btnUpdateEmployee").click(function () {
+                    let EmployeeId = $("#empId").val();
+                    var employee = {};
+                    employee.FirstName = $("#firstName").val();
+                    employee.LastName = $("#lastName").val();
+                    employee.PhoneNumber = $("#PhoneNumber").val();
+                    employee.Email = $("#Email").val();
+                    employee.Address = $("#Address").val();
+                    employee.Pincode = $("#Pincode").val();
+                    employee.Company = $("#Company").val();
+                    employee.JobProfile = $("#JobProfile").val();
+                    console.log(JSON.stringify(employee));
+                    $.ajax({
+                        type: "PUT",
+                        url: "/api/update/" + EmployeeId,
+                        data: JSON.stringify(employee),
+                        dataType: "text",
+                        contentType: "application/json; charset=utf-8",
+                        processData: true,
+                        success: function () {
+                            alert("Record Updated successfully.");
+                            window.location.reload();
+                        },
+                        error: function () {
+                            alert("Error while Updating...");
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

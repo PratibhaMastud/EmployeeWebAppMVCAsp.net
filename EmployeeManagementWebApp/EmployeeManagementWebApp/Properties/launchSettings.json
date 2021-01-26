@@ -16,9 +16,9 @@
       }
     },
     "EmployeeManagementWebApp": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:5001/Html/Registration.html",
+      "launchUrl": "https://localhost:44366/Html/Reset.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -9,11 +9,14 @@
 namespace EmployeeRepository
 {
     using EmployeeModel;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;
     using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using System.Linq;
+    using System.Net;
+    using System.Net.Mail;
     using System.Text;
     public class Repository : IRepository
     {
@@ -68,7 +71,7 @@ namespace EmployeeRepository
             return "SUCCESS";
         }
 
-        public IEnumerable<Employee> GetEmployee(int EmployeeId)
+        public IEnumerable<Employee> GetEmployeeByID(int EmployeeId)
         {
             List<Employee> employees = new List<Employee>();
             employees.Add(this.employeeContext.Employees.Find(EmployeeId));
@@ -86,6 +89,52 @@ namespace EmployeeRepository
             catch (NullReferenceException e)
             {
                 throw e;
+            }
+        }
+
+        public string SendEmailForForgotPass(string emailAdd)
+        {
+            string body;
+            string subject = "EmployeeManagements Credential";
+            var entry = this.employeeContext.Employees.FirstOrDefault(x => x.Email == emailAdd);
+            if (entry != null)
+            {
+                body = entry.Password;
+            }
+            else
+            {
+                return "Not Found";
+            }
+            using (MailMessage mailMessage = new MailMessage("karandepratibha999@gmail.com", emailAdd))
+            {
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("karandepratibha999@gmail.com", "pratibha999");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mailMessage);
+                return "SUCCESS";
+            }
+        }
+
+        public string ResetEmployeePassword(string oldPassword, string newPassword)
+        {
+            var resetPassword = employeeContext.Employees.FirstOrDefault(pass => pass.Password == oldPassword);
+            if (resetPassword != null)
+            {
+                resetPassword.Password = newPassword;
+                employeeContext.Entry(resetPassword).State = EntityState.Modified;
+                employeeContext.SaveChanges();
+                return "SUCCESS";
+            }
+            else
+            {
+                return "NOT_FOUND";
             }
         }
     }
